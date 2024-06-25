@@ -26,6 +26,6 @@ public class CloningFacility {
         return _clones.get(id);
     }
 
-    private final HashMap<Object, IntHolder> _refToId = new HashMap<Object, IntHolder>();
     private final Vector<Object> _clones = new Vector<>();
+    private final HashMap<Object, IntHolder> _refToId = new HashMap<>();
 }

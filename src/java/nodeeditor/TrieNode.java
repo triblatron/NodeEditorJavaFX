@@ -1,6 +1,5 @@
 package nodeeditor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TrieNode {
@@ -13,7 +12,7 @@ public class TrieNode {
             this.child = child;
         }
     }
-    private HashMap<Character, Link> children = new HashMap<>();
+    private final HashMap<Character, Link> children = new HashMap<>();
 
     public void addWord(String word) {
         if (word == null || word.isEmpty()) {
@@ -39,8 +38,8 @@ public class TrieNode {
         if (word == null || word.isEmpty()) {
             // Depth-first search to build up possible rest of matches
             Object[] a = children.values().toArray();
-            for (int i=0; i<a.length; ++i) {
-                Link link = (Link)a[i];
+            for (Object o : a) {
+                Link link = (Link) o;
                 if (link.key != '*') {
                     builder.append(link.key);
                     return link.child.search(word, builder, prefixBuilder);
@@ -63,8 +62,8 @@ public class TrieNode {
         }
         else {
             Object[] a = children.values().toArray();
-            for (int i=0; i<a.length; ++i) {
-                Link link = (Link)a[i];
+            for (Object o : a) {
+                Link link = (Link) o;
                 prefixBuilder.append(link.key);
                 return link.child.search(word, builder, prefixBuilder);
             }

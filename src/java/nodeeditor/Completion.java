@@ -15,6 +15,6 @@ public class Completion {
         return root.search(substring);
     }
 
-    private TrieNode root = new TrieNode();
+    private final TrieNode root = new TrieNode();
     private int numWords;
 }

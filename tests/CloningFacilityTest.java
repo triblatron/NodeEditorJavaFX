@@ -9,7 +9,7 @@ public class CloningFacilityTest {
         CloningFacility facility = new CloningFacility();
         TestObject orig = new TestObject();
         orig.next = new TestObject();
-        TestObject clone = null;
+        TestObject clone;
         IntHolder id = new IntHolder(0);
         if (facility.putOrig(orig, id))
         {

@@ -20,11 +20,10 @@ public class TestObject {
         if (this == other) {
             return true;
         }
-        TestObject my = (TestObject) other;
-        if (spoo != my.spoo) {
+        if (getClass() != other.getClass())
             return false;
-        }
 
-        return true;
+        TestObject my = (TestObject) other;
+        return spoo == my.spoo;
     }
 }

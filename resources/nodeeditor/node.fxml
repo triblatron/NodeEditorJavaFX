@@ -4,5 +4,5 @@
 <?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.shape.Circle?>
 <GridPane>
-    <Rectangle width="50" height="100"></Rectangle>
+    <Rectangle width="50" height="100" />
 </GridPane>

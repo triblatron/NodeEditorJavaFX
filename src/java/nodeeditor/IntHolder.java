@@ -1,3 +1,5 @@
+package nodeeditor;
+
 public class IntHolder {
     public int value;
 

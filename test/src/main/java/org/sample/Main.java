@@ -28,10 +28,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.openjdk.jmh.samples;
+package org.sample;
 
+import nodeeditor.Completion;
+import nodeeditor.CompletionSubstring;
 import nodeeditor.CompletionTrie;
-import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
@@ -68,29 +70,78 @@ public class Main {
      * might find this thought unfolded in future examples by having the
      * "baseline" measurements to compare against.
      */
+    public static class StateBase {
+        public void addWords(Completion sut) {
+            sut.addWord("Graph|Add Node|Math|Trig");
+            sut.addWord("Graph|Add Node|Math|RelOp");
+            sut.addWord("Graph|Add Node|Math|Vector");
+            sut.addWord("Graph|Add Node|Math|LogicOp");
+            sut.addWord("Graph|Add Node|Math|Constant");
+            sut.addWord("Graph|Add Node|Geometry|Read|ID");
+            sut.addWord("Graph|Add Node|Geometry|Read|Index");
+            sut.addWord("Graph|Add Node|Geometry|Read|Named Attribute");
+            sut.addWord("Graph|Add Node|Geometry|Read|Normal");
+            sut.addWord("Graph|Add Node|Geometry|Read|Position");
+            sut.addWord("Graph|Add Node|Geometry|Read|Radius");
+            sut.addWord("Graph|Add Node|Geometry|Sample|Geometry Proximity");
+            sut.addWord("Graph|Add Node|Geometry|Sample|Index of Nearest");
+            sut.addWord("Graph|Add Node|Geometry|Sample|Raycast");
+            sut.addWord("Graph|Add Node|Geometry|Sample|Sample Index");
+            sut.addWord("Graph|Add Node|Geometry|Sample|Sample Nearest");
+            sut.addWord("Graph|Add Node|Geometry|Write|Set ID");
+            sut.addWord("Graph|Add Node|Geometry|Write|Set Position");
+            sut.addWord("Graph|Add Node|Geometry|Operations|Bounding Box");
+            sut.addWord("Graph|Add Node|Geometry|Operations|Convex Hull");
+            sut.addWord("Graph|Add Node|Geometry|Operations|Delete Geometry");
+            sut.addWord("Graph|Add Node|Geometry|Operations|Duplicate Geometry");
+            sut.addWord("Graph|Add Node|Geometry|Operations|Merge by Distance");
+            sut.addWord("Graph|Add Node|Geometry|Operations|Transform Geometry");
+            sut.addWord("Graph|Add Node|Geometry|Operations|Separate Components");
+            sut.addWord("Graph|Add Node|Geometry|Geometry To Instance");
+            sut.addWord("Graph|Add Node|Geometry|Join Geometry");
 
-    @Benchmark
-    public void testCompletionTrie() {
-        CompletionTrie sut = new CompletionTrie();
-        sut.addWord("Graph|Add Node|Math|Trig");
-        sut.addWord("Graph|Add Node|Math|RelOp");
-        sut.addWord("Graph|Add Node|Math|Vector");
-        sut.addWord("Graph|Add Node|Math|LogicOp");
-        sut.addWord("Graph|Add Node|Math|Constant");
-        ArrayList<String> matches = new ArrayList<>();
-        sut.search("Add", matches);
+        }
     }
 
-    @Benchmark
-    public void testCompletionSubstring() {
+    @State(Scope.Thread)
+    public static class TrieState extends StateBase {
+
+        @Setup(Level.Trial)
+        public void doSetup() {
+            addWords(sut);
+        }
+
+        @TearDown(Level.Trial)
+        public void doTearDown() {
+            System.out.println("Do TearDown");
+        }
         CompletionTrie sut = new CompletionTrie();
-        sut.addWord("Graph|Add Node|Math|Trig");
-        sut.addWord("Graph|Add Node|Math|RelOp");
-        sut.addWord("Graph|Add Node|Math|Vector");
-        sut.addWord("Graph|Add Node|Math|LogicOp");
-        sut.addWord("Graph|Add Node|Math|Constant");
+    }
+    @Benchmark
+    public void testCompletionTrie(TrieState state) {
         ArrayList<String> matches = new ArrayList<>();
-        sut.search("Add", matches);
+        state.sut.search("Add", matches);
+    }
+
+    @State(Scope.Thread)
+    public static class SubstringState extends StateBase {
+        @Setup(Level.Trial)
+        public void doSetup() {
+            System.out.println("Do Setup");
+
+            addWords(sut);
+        }
+
+        @TearDown(Level.Trial)
+        public void doTearDown() {
+            System.out.println("Do TearDown");
+        }
+        CompletionSubstring sut = new CompletionSubstring();
+    }
+    @Benchmark
+    public void testCompletionSubstring(SubstringState state) {
+        ArrayList<String> matches = new ArrayList<>();
+        state.sut.search("Add", matches);
     }
     /*
      * ============================== HOW TO RUN THIS TEST: ====================================

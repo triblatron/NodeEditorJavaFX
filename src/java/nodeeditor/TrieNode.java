@@ -38,9 +38,7 @@ public class TrieNode {
     private void search(String word, ArrayList<String> matches, String partialMatch) {
         if (word == null || word.isEmpty()) {
             // Depth-first search to build up possible rest of matches
-            Object[] a = children.values().toArray();
-            for (Object o : a) {
-                Link link = (Link) o;
+            for (Link link : children.values()) {
                 if (link.key != '*') {
                     link.child.search(word, matches, partialMatch + link.key);
                 }
@@ -63,11 +61,8 @@ public class TrieNode {
             child.child.search(rest, matches, partialMatch + child.key);
         }
         else {
-            Object[] a = children.values().toArray();
-            for (Object o : a) {
-                Link link = (Link) o;
-
-                link.child.search(word, matches, partialMatch + link.key);
+            for (Link o : children.values()) {
+                o.child.search(word, matches, partialMatch + o.key);
             }
         }
     }

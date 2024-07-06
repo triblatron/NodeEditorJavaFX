@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CompletionTrieTest {
+public class CompletionTrieTest extends CompletionTest {
     @ParameterizedTest
     @CsvSource({"Graph,Gr,Graph","Graph|Add Node|Math|Trig,Add,Graph|Add Node|Math|Trig"})
     public void testAddWord(String word, String substring, String matchString) {
@@ -40,12 +40,8 @@ public class CompletionTrieTest {
     })
     public void testSearchMultipleWords(String substring, int numMatches, String match) {
         CompletionTrie sut = new CompletionTrie();
-        sut.addWord("cat");
-        sut.addWord("cab");
-        sut.addWord("cabin");
-        sut.addWord("catamaran");
-        sut.addWord("Node|Add|Math|Trig");
-        sut.addWord("Node|Add|Math|RelOp");
+
+        addMultipleWords(sut);
         ArrayList<String> matches = new ArrayList<>();
         sut.search(substring, matches);
         assertEquals(numMatches, matches.size());
@@ -58,9 +54,7 @@ public class CompletionTrieTest {
     })
     public void testNoMatches(String substring) {
         CompletionTrie sut = new CompletionTrie();
-        sut.addWord("Node|Add|Math|Trig");
-        sut.addWord("Node|Add|Math|RelOp");
-        sut.addWord("Node|Add|Math|Constant");
+        addNoMatches(sut);
         ArrayList<String> matches = new ArrayList<>();
         sut.search(substring, matches);
         assertEquals(0, matches.size());

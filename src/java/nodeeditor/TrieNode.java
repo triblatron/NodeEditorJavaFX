@@ -1,5 +1,6 @@
 package nodeeditor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TrieNode {
@@ -30,11 +31,11 @@ public class TrieNode {
         this.children.get(first.charAt(0)).child.addWord(rest);
     }
 
-    public String search(String word) {
-        return search(word, new StringBuilder(), new StringBuilder());
+    public void search(String word, ArrayList<String> matches) {
+        search(word, new StringBuilder(), new StringBuilder(), matches, "", -1);
     }
 
-    private String search(String word, StringBuilder builder, StringBuilder prefixBuilder) {
+    private void search(String word, StringBuilder builder, StringBuilder prefixBuilder, ArrayList<String> matches, String partialMatch, int childIndex) {
         if (word == null || word.isEmpty()) {
             // Depth-first search to build up possible rest of matches
             Object[] a = children.values().toArray();
@@ -42,10 +43,13 @@ public class TrieNode {
                 Link link = (Link) o;
                 if (link.key != '*') {
                     builder.append(link.key);
-                    return link.child.search(word, builder, prefixBuilder);
+                    link.child.search(word, builder, prefixBuilder, matches, partialMatch + link.key, childIndex);
+                }
+                else {
+                    matches.add(partialMatch);
                 }
             }
-            return prefixBuilder.toString() + builder.toString();
+            return;
         }
         char first = word.charAt(0);
         String rest = null;
@@ -58,16 +62,25 @@ public class TrieNode {
 
         if (child != null) {
             builder.append(child.key);
-            return child.child.search(rest, builder, prefixBuilder);
+            child.child.search(rest, builder, prefixBuilder, matches, partialMatch + child.key, childIndex);
         }
         else {
             Object[] a = children.values().toArray();
-            for (Object o : a) {
-                Link link = (Link) o;
+            if (childIndex!=-1) {
+
+                Link link = (Link) a[childIndex];
                 prefixBuilder.append(link.key);
-                return link.child.search(word, builder, prefixBuilder);
+                link.child.search(word, builder, prefixBuilder, matches, partialMatch+link.key, childIndex);
+                matches.add(builder.toString());
             }
-            return builder.toString();
+            else {
+                for (int i=0; i<a.length; ++i) {
+                    Link link = (Link) a[i];
+
+                    prefixBuilder.append(link.key);
+                    link.child.search(word, builder, prefixBuilder, matches, partialMatch + link.key, i);
+                }
+            }
         }
     }
 }

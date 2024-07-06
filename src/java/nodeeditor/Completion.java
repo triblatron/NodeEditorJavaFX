@@ -1,5 +1,7 @@
 package nodeeditor;
 
+import java.util.ArrayList;
+
 public class Completion {
 
     public void addWord(String word) {
@@ -11,8 +13,8 @@ public class Completion {
         return this.numWords;
     }
 
-    public String search(String substring) {
-        return root.search(substring);
+    public void search(String substring, ArrayList<String> matches) {
+        root.search(substring,matches);
     }
 
     private final TrieNode root = new TrieNode();

@@ -1,8 +1,11 @@
 import nodeeditor.Completion;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CompletionTest {
     @ParameterizedTest
@@ -11,6 +14,21 @@ public class CompletionTest {
         Completion sut = new Completion();
         sut.addWord(word);
         assertEquals(1, sut.numWords());
-        assertEquals(matchString, sut.search(substring));
+        ArrayList<String> matches = new ArrayList<>();
+        sut.search(substring, matches);
+        assertFalse(matches.isEmpty());
+        assertEquals(matchString, matches.get(0));
+    }
+
+    @Test
+    public void testSearchMultipleWords() {
+        Completion sut = new Completion();
+        sut.addWord("cat");
+        sut.addWord("cab");
+        ArrayList<String> matches = new ArrayList<>();
+        sut.search("a", matches);
+        assertFalse(matches.isEmpty());
+        assertTrue(matches.contains("cat"));
+        assertTrue(matches.contains("cab"));
     }
 }

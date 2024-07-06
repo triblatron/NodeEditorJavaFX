@@ -64,8 +64,8 @@ public class TrieNode {
         }
         else {
             Object[] a = children.values().toArray();
-            for (int i=0; i<a.length; ++i) {
-                Link link = (Link) a[i];
+            for (Object o : a) {
+                Link link = (Link) o;
 
                 link.child.search(word, matches, partialMatch + link.key);
             }

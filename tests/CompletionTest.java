@@ -20,15 +20,17 @@ public class CompletionTest {
         assertEquals(matchString, matches.get(0));
     }
 
-    @Test
-    public void testSearchMultipleWords() {
+    @ParameterizedTest
+    @CsvSource({"a,4,cat", "a,4,cab", "a,4,cabin", "b,2,cab", "b,2,cabin", "cat,2,cat", "cat,2,catamaran"})
+    public void testSearchMultipleWords(String substring, int numMatches, String match) {
         Completion sut = new Completion();
         sut.addWord("cat");
         sut.addWord("cab");
+        sut.addWord("cabin");
+        sut.addWord("catamaran");
         ArrayList<String> matches = new ArrayList<>();
-        sut.search("a", matches);
-        assertFalse(matches.isEmpty());
-        assertTrue(matches.contains("cat"));
-        assertTrue(matches.contains("cab"));
+        sut.search(substring, matches);
+        assertEquals(numMatches, matches.size());
+        assertTrue(matches.contains(match));
     }
 }

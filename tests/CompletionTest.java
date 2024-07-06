@@ -20,16 +20,49 @@ public class CompletionTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"a,4,cat", "a,4,cab", "a,4,cabin", "b,2,cab", "b,2,cabin", "cat,2,cat", "cat,2,catamaran", "at,2,cat", "at,2,catamaran", "ta,1,catamaran"})
+    @CsvSource({
+            // Match at middle of multiple words
+            "a,6,cat",
+            "a,6,cab",
+            "a,6,cabin",
+            "b,2,cab",
+            "b,2,cabin",
+            "cat,2,cat",
+            "cat,2,catamaran",
+            "at,4,cat",
+            "at,4,catamaran",
+            "ta,1,catamaran",
+            // Match in middle
+            "Add,2,Node|Add|Math|Trig",
+            "Add,2,Node|Add|Math|RelOp",
+            // Match at end
+            "RelOp,1,Node|Add|Math|RelOp",
+    })
     public void testSearchMultipleWords(String substring, int numMatches, String match) {
         Completion sut = new Completion();
         sut.addWord("cat");
         sut.addWord("cab");
         sut.addWord("cabin");
         sut.addWord("catamaran");
+        sut.addWord("Node|Add|Math|Trig");
+        sut.addWord("Node|Add|Math|RelOp");
         ArrayList<String> matches = new ArrayList<>();
         sut.search(substring, matches);
         assertEquals(numMatches, matches.size());
         assertTrue(matches.contains(match));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "Vector"
+    })
+    public void testNoMatches(String substring) {
+        Completion sut = new Completion();
+        sut.addWord("Node|Add|Math|Trig");
+        sut.addWord("Node|Add|Math|RelOp");
+        sut.addWord("Node|Add|Math|Constant");
+        ArrayList<String> matches = new ArrayList<>();
+        sut.search(substring, matches);
+        assertEquals(0, matches.size());
     }
 }

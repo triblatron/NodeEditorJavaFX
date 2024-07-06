@@ -23,5 +23,5 @@ public class CompletionSubstring implements Completion {
         }
     }
 
-    private ArrayList<String> words = new ArrayList<>();
+    private final ArrayList<String> words = new ArrayList<>();
 }

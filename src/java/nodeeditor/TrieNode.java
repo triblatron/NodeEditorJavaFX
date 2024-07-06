@@ -61,8 +61,8 @@ public class TrieNode {
             child.child.search(rest, matches, partialMatch + child.key);
         }
         else {
-            for (Link o : children.values()) {
-                o.child.search(word, matches, partialMatch + o.key);
+            for (Link link : children.values()) {
+                link.child.search(word, matches, partialMatch + link.key);
             }
         }
     }

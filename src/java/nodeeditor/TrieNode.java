@@ -62,7 +62,9 @@ public class TrieNode {
         }
         else {
             for (Link link : children.values()) {
-                link.child.search(word, matches, partialMatch + link.key);
+                if (link.key != '*') {
+                    link.child.search(word, matches, partialMatch + link.key);
+                }
             }
         }
     }

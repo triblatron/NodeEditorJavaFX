@@ -20,7 +20,7 @@ public class CompletionTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"a,4,cat", "a,4,cab", "a,4,cabin", "b,2,cab", "b,2,cabin", "cat,2,cat", "cat,2,catamaran", "at,2,cat", "at,2,catamaran"})
+    @CsvSource({"a,4,cat", "a,4,cab", "a,4,cabin", "b,2,cab", "b,2,cabin", "cat,2,cat", "cat,2,catamaran", "at,2,cat", "at,2,catamaran", "ta,1,catamaran"})
     public void testSearchMultipleWords(String substring, int numMatches, String match) {
         Completion sut = new Completion();
         sut.addWord("cat");

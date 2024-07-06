@@ -32,17 +32,17 @@ public class TrieNode {
     }
 
     public void search(String word, ArrayList<String> matches) {
-        search(word, matches, "", -1);
+        search(word, matches, "");
     }
 
-    private void search(String word, ArrayList<String> matches, String partialMatch, int childIndex) {
+    private void search(String word, ArrayList<String> matches, String partialMatch) {
         if (word == null || word.isEmpty()) {
             // Depth-first search to build up possible rest of matches
             Object[] a = children.values().toArray();
             for (Object o : a) {
                 Link link = (Link) o;
                 if (link.key != '*') {
-                    link.child.search(word, matches, partialMatch + link.key, childIndex);
+                    link.child.search(word, matches, partialMatch + link.key);
                 }
                 else {
                     matches.add(partialMatch);
@@ -60,21 +60,14 @@ public class TrieNode {
         Link child = children.get(first);
 
         if (child != null) {
-            child.child.search(rest, matches, partialMatch + child.key, childIndex);
+            child.child.search(rest, matches, partialMatch + child.key);
         }
         else {
             Object[] a = children.values().toArray();
-            if (childIndex!=-1) {
+            for (int i=0; i<a.length; ++i) {
+                Link link = (Link) a[i];
 
-                Link link = (Link) a[childIndex];
-                link.child.search(word, matches, partialMatch+link.key, childIndex);
-            }
-            else {
-                for (int i=0; i<a.length; ++i) {
-                    Link link = (Link) a[i];
-
-                    link.child.search(word, matches, partialMatch + link.key, i);
-                }
+                link.child.search(word, matches, partialMatch + link.key);
             }
         }
     }

@@ -49,15 +49,12 @@ public class TrieNode {
             return;
         }
         char first = word.charAt(0);
-        String rest = null;
-
-        if (word.length()>1) {
-            rest = word.substring(1);
-        }
 
         Link child = children.get(first);
 
         if (child != null) {
+            String rest = word.substring(1);
+
             child.child.search(rest, matches, partialMatch + child.key);
         }
         else {

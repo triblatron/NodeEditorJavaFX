@@ -1,4 +1,4 @@
-import nodeeditor.Completion;
+import nodeeditor.CompletionTrie;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CompletionTest {
+public class CompletionTrieTest {
     @ParameterizedTest
     @CsvSource({"Graph,Gr,Graph","Graph|Add Node|Math|Trig,Add,Graph|Add Node|Math|Trig"})
     public void testAddWord(String word, String substring, String matchString) {
-        Completion sut = new Completion();
+        CompletionTrie sut = new CompletionTrie();
         sut.addWord(word);
         assertEquals(1, sut.numWords());
         ArrayList<String> matches = new ArrayList<>();
@@ -39,7 +39,7 @@ public class CompletionTest {
             "RelOp,1,Node|Add|Math|RelOp",
     })
     public void testSearchMultipleWords(String substring, int numMatches, String match) {
-        Completion sut = new Completion();
+        CompletionTrie sut = new CompletionTrie();
         sut.addWord("cat");
         sut.addWord("cab");
         sut.addWord("cabin");
@@ -57,7 +57,7 @@ public class CompletionTest {
             "Vector"
     })
     public void testNoMatches(String substring) {
-        Completion sut = new Completion();
+        CompletionTrie sut = new CompletionTrie();
         sut.addWord("Node|Add|Math|Trig");
         sut.addWord("Node|Add|Math|RelOp");
         sut.addWord("Node|Add|Math|Constant");

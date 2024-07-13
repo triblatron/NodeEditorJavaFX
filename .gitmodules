@@ -1,0 +1,3 @@
+[submodule "thirdparty/NodeService"]
+	path = thirdparty/NodeService
+	url = https://github.com/triblatron/NodeService

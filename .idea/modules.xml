@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NodeEditorJavaFX.iml" filepath="$PROJECT_DIR$/NodeEditorJavaFX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/target/target.iml" filepath="$PROJECT_DIR$/test/target/target.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/src/test.iml" filepath="$PROJECT_DIR$/test/src/test.iml" />
     </modules>
   </component>
 </project>

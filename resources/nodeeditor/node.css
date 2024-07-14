@@ -1,0 +1,65 @@
+.selected
+{
+    -fx-border-width:2;
+    -fx-border-color:red;
+}
+
+.screen
+{
+    -fx-border-width:2;
+    -fx-border-color:black;
+}
+
+.normal
+{
+    -fx-border-width:2;
+    -fx-border-color:black;
+}
+
+.node
+{
+    -fx-background-color: linear-gradient(from 0% 25% to 0% 100%, #ffffff, #c0c0c0);
+}
+
+.input
+{
+    -fx-fill:blue;
+    -fx-scale-x:5;
+    -fx-scale-y:5;
+    -fx-scale-z:5;
+}
+
+.output
+{
+    -fx-fill:green;
+    -fx-scale-x:5;
+    -fx-scale-y:5;
+    -fx-scale-z:5;
+}
+
+.port
+{
+    -fx-alignment:center;
+}
+
+
+.output:hover, .input:hover
+{
+    -fx-scale-x:7;
+    -fx-scale-y:7;
+    -fx-scale-z:7;
+}
+.output:focus, .input:focus
+{
+    -fx-scale-x:7;
+    -fx-scale-y:7;
+    -fx-scale-z:7;
+    -fx-fill: purple;
+}
+.output:active, .input:active
+{
+    -fx-scale-x:7;
+    -fx-scale-y:7;
+    -fx-scale-z:7;
+    -fx-fill:cyan;
+}

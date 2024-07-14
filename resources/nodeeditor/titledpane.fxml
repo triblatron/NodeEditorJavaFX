@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-
-<TitledPane xmlns="http://javafx.com/javafx">
-<TextField>Wibble</TextField>
-</TitledPane>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<GridPane stylesheets="@node.css" styleClass="normal">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES"  minWidth="33.0" percentWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="33.0" percentWidth="70.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="33.0" percentWidth="20.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS" percentHeight="100" />
+    </rowConstraints>
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="0" textAlignment="CENTER" alignment="TOP_CENTER">Foo</Label>
+    <TitledPane xmlns="http://javafx.com/javafx" text="Category1" expanded="false">
+        <VBox>
+            <HBox GridPane.columnIndex="0">
+                <Circle styleClass="input" radius="1"/>
+                <Label>input1</Label>
+                <TextField>1.0</TextField>
+            </HBox>
+            <HBox GridPane.columnIndex="2">
+                <TextField>2.0</TextField>
+                <Label>output1</Label>
+                <Circle styleClass="output" radius="1"/>
+            </HBox>
+        </VBox>
+    </TitledPane>
+</GridPane>

@@ -3,7 +3,7 @@ package nodeeditor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TitledPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class TitledPaneDemo extends Application {
@@ -12,8 +12,7 @@ public class TitledPaneDemo extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/nodeeditor/titledpane.fxml"));
-            //    Parent root = FXMLLoader.load(getClass().getResource("view/Calculatorview.fxml"));
-            TitledPane root = loader.load();
+            GridPane root = loader.load();
             Scene scene = new Scene(root);
 
             primaryStage.setScene(scene);
